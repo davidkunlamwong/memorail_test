@@ -95,21 +95,21 @@ void pH_proc(modbus_t *mb, bool ch2)
 {
     if (ch2)
     {
-        std::cout << "\tpH=" << read(mb, PH_VAL CH2, 2, 'F') << " " << std::flush;
-        std::cout << read(mb, PH_VTG CH2, 2, 'F') << "mV " << std::flush;
-        std::cout << read(mb, PH_RES CH2, 2, 'F') << "Ω " << std::flush;
-        std::cout << "\tORP=" << read(mb, PH_ORP CH2, 2, 'F') << "mV " << std::flush;
-        std::cout << read(mb, PH_ORP_RES CH2, 2, 'F') << "Ω " << std::flush;
-        std::cout << read(mb, PH_TMP CH2, 2, 'F') << "C " << std::flush;
+        std::cout << "\tpH=" << read(mb, PH_VAL CH2, 2, 'F') << " ";
+        std::cout << read(mb, PH_VTG CH2, 2, 'F') << "mV ";
+        std::cout << read(mb, PH_RES CH2, 2, 'F') << "Ω ";
+        std::cout << "\tORP=" << read(mb, PH_ORP CH2, 2, 'F') << "mV ";
+        std::cout << read(mb, PH_ORP_RES CH2, 2, 'F') << "Ω ";
+        std::cout << read(mb, PH_TMP CH2, 2, 'F') << "C ";
     }
     else
     {
-        std::cout << "pH=" << read(mb, PH_VAL, 2, 'F') << " " << std::flush;
-        std::cout << read(mb, PH_VTG, 2, 'F') << "mV " << std::flush;
-        std::cout << read(mb, PH_RES, 2, 'F') << "Ω " << std::flush;
-        std::cout << "\tORP=" << read(mb, PH_ORP, 2, 'F') << "mV " << std::flush;
-        std::cout << read(mb, PH_ORP_RES, 2, 'F') << "Ω " << std::flush;
-        std::cout << read(mb, PH_TMP, 2, 'F') << "C " << std::flush;
+        std::cout << "pH=" << read(mb, PH_VAL, 2, 'F') << " ";
+        std::cout << read(mb, PH_VTG, 2, 'F') << "mV ";
+        std::cout << read(mb, PH_RES, 2, 'F') << "Ω ";
+        std::cout << "\tORP=" << read(mb, PH_ORP, 2, 'F') << "mV ";
+        std::cout << read(mb, PH_ORP_RES, 2, 'F') << "Ω ";
+        std::cout << read(mb, PH_TMP, 2, 'F') << "C ";
     }
 }
 
@@ -117,17 +117,17 @@ void condi_proc(modbus_t *mb, bool ch2)
 {
     if (ch2)
     {
-        std::cout << "\tcond=" << read(mb, CI_CDC CH2, 2, 'F') << "μS " << std::flush;
-        std::cout << read(mb, CI_CDT CH2, 2, 'F') << "μS/cm " << std::flush;
-        std::cout << read(mb, CI_RES CH2, 2, 'F') << "Ωm " << std::flush;
-        std::cout << read(mb, CI_TMP CH2, 2, 'F') << "C " << std::flush;
+        std::cout << "\tcond=" << read(mb, CI_CDC CH2, 2, 'F') << "μS ";
+        std::cout << read(mb, CI_CDT CH2, 2, 'F') << "μS/cm ";
+        std::cout << read(mb, CI_RES CH2, 2, 'F') << "Ωm ";
+        std::cout << read(mb, CI_TMP CH2, 2, 'F') << "C ";
     }
     else
     {
-        std::cout << "cond=" << read(mb, CI_CDC, 2, 'F') << "μS " << std::flush;
-        std::cout << read(mb, CI_CDT, 2, 'F') << "μS/cm " << std::flush;
-        std::cout << read(mb, CI_RES, 2, 'F') << "Ωm " << std::flush;
-        std::cout << read(mb, CI_TMP, 2, 'F') << "C " << std::flush;
+        std::cout << "cond=" << read(mb, CI_CDC, 2, 'F') << "μS ";
+        std::cout << read(mb, CI_CDT, 2, 'F') << "μS/cm ";
+        std::cout << read(mb, CI_RES, 2, 'F') << "Ωm ";
+        std::cout << read(mb, CI_TMP, 2, 'F') << "C ";
     }
 }
 
@@ -137,7 +137,6 @@ void applet(modbus_t *mb)
     // void *ptr = static_cast<void *>(&payload);
     // int ret = modbus_write_registers(mb, 1200 - 1, 2, static_cast<uint16_t *>(ptr));
 
-    std::cout << "MemoRail" << std::endl;
     std::cout << read(mb, DEVICE_MANU, 12, 'S') << std::flush;
     std::cout << read(mb, DEVICE_NAME, 12, 'S') << std::endl;
     std::cout << read(mb, DEVICE_ORDER, 12, 'S') << std::flush;
@@ -207,12 +206,12 @@ void applet(modbus_t *mb)
     std::cout << std::endl;
     // loop
     using namespace std::chrono_literals;
-    auto sleep = 1s;
+    auto sleep = 200ms;
     while (true)
     {
         pH_proc(mb, false);
         condi_proc(mb, true);
-        std::cout << '\r';
+        std::cout << '\r' << std::flush;
 
         std::this_thread::sleep_for(sleep);
     }
