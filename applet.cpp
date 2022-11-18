@@ -77,10 +77,10 @@ std::string printRegister(uint16_t *rx_buf, int words_received, char disp)
 std::string read(modbus_t *mb, int addr, int qty, char disp)
 {
     using namespace std::chrono_literals;
-    std::this_thread::sleep_for(500ns);
+    std::this_thread::sleep_for(1ms);
     uint16_t buf[32] = {0};
     int ret;
-    int retry = 10;
+    int retry = 3;
     while (retry > 0)
     {
         retry--;
@@ -212,7 +212,7 @@ void applet(modbus_t *mb)
     {
         pH_proc(mb, false);
         condi_proc(mb, true);
-        std::cout << std::endl;
+        std::cout << '\r';
 
         std::this_thread::sleep_for(sleep);
     }
